@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+@import './app/scss/button.scss';
+
+html {
+    box-sizing: border-box;
+}
+
+*
+// *::after, *::before 
+{
+    box-sizing: inherit;
+}
+
+
+body {
+    font-family: 'Exo 2', sans-serif;
+    margin: 0;
+    background-color: #293440;
+}
+
+textarea,
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    @include button(
+        $height: 30px,
+        $transition: 0.37s ease-out all
+    )
+}

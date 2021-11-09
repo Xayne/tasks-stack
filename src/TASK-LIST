@@ -1,0 +1,19 @@
+
+sort out state (more tree-like structure, use distinctTillChanged)
+
+sing in (+ update sign in screen) -> init 
+
+mini-scale for history feature
+
+ux - long heading and desc (unfold on hover?)
+
+edit task feature
+
+secure read/write on BE
+
+tech debt
+    reduce markup mess
+
+
+---------------
+Free the ui: 

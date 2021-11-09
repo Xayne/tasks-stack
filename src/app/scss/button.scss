@@ -1,0 +1,97 @@
+
+
+
+
+@mixin button (
+    $base: #0f1923,
+    $white: #ece8e1,
+    $pink: #ff4655,
+    $height: 54px,
+    $transition: 0.3s ease-out all,
+) {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    height: unset;
+    background-color: unset;
+    border: none;
+    font-size: 20px;
+    padding: 0;
+    cursor: pointer;
+    width: 100%;
+    font-size: inherit;
+    font-weight: 900;
+    color: $pink;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    &.white:hover > p {
+        color: $white;
+    }
+    &.white > p {
+        background: $white;
+        color: $base;
+        & span.base {
+        border: 1px solid transparent;
+        }
+    }
+    &.transparent:hover > p {
+        color: $white;
+        & span.text {
+        box-shadow: 0 0 0 1px $white;
+        }
+    }
+    &.transparent > p {
+        background: $base;
+        color: $white;
+        & span.base {
+        border: 1px solid $white;
+        }
+    }
+    & p {
+        margin: 0;
+        height: $height;
+        line-height: $height;
+        box-sizing: border-box;
+        z-index: 1;
+        left: 0;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        & span.base {
+            box-sizing: border-box;
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            border: 1px solid $pink;
+            border-radius: 10px;
+        }
+        & span.bg {
+            left: -5%;
+            position: absolute;
+            background: $pink;
+            width: 0;
+            height: 100%;
+            z-index: 3;
+            transition: $transition;
+            transform: skewX(-10deg);
+            }
+            & span.text {
+            z-index: 4;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+    &:hover {
+        color: $white;
+        & span.bg {
+            width: 110%;
+        }
+    }
+}

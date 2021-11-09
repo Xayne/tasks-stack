@@ -1,0 +1,104 @@
+@import "../../scss/elev.scss";
+@import "../../scss/task.scss";
+@import "../../scss/colors.scss";
+
+:host {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    gap: 15px;
+    align-items: flex-end;
+
+    &[root] {
+        grid-template-columns: repeat(2, max-content) 1fr;
+        .main-stack-wrapper.first {
+            padding-bottom: 16px;
+        }
+        .prev-stack.first {
+            padding-top: 16px;
+            padding-bottom: 16px;
+            overflow: scroll;
+        }
+    }
+}
+
+.stack-empty {
+    height: 50px;
+    color: wheat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.main-stack {
+    position: relative;
+    width: 330px;
+    display: grid;
+    gap: 15px;
+    align-content: flex-start;
+    padding: 15px;
+    border-radius: 10px;
+    /* border: 1px dotted #4e4636; */
+    background-color: #313a42;
+
+    &.first {
+        @include elev-max
+    }
+
+    .task {
+        @include task-block
+    }
+
+    .task-moved-art {
+        position: absolute;
+        top: 121px;
+        width: 330px;
+        height: 50px;
+        display: grid;
+        align-content: center;
+        justify-content: stretch;
+        z-index: 2;
+        .content {
+            font-size: 21px;
+            border-bottom: 1px dashed;
+            display: grid;
+            grid-template-columns: repeat(3, max-content);
+            justify-content: center;
+            grid-gap: 10px;
+            gap: 10px;
+            padding-bottom: 6px;
+            .t {
+                font-size: 16px;
+            }
+        }
+        &.pop {
+            color: $poped-task-font-color;   
+            .ico {
+                transform: rotateZ(-90deg);
+            }     
+        }
+        &.push {
+            color: $pushed-task-font-color;;  
+            .ico {
+                transform: rotateZ(90deg);
+            }  
+        }
+    }
+}
+
+.stack-morph-arrow {
+    padding: 20px 0;
+    font-size: 30px;
+    color: #408b9d;
+}
+
+.stack-equals-arrow {
+    padding: 20px 0;
+    transform: rotateZ(90deg);
+    font-size: 30px;
+    color: #409d48;
+}
+
+.prev-stack {
+    // filter: brightness(0.85) grayscale(0.5);
+}

@@ -1,0 +1,213 @@
+
+
+
+
+<div class="main-stack-wrapper"
+    [ngClass]='{ "first": topmost }'
+>
+
+    <div class="main-stack"
+    >
+
+        <!-- TODO DRY, Reduce mess -->
+
+        <div *ngIf='state.stackProducedType._tag === "empty" || (topmost && state.tasks.length === 0)' 
+            class="stack-empty"
+        >
+            Stack is empty
+        </div>
+
+        <div *ngIf='state.stackProducedType._tag === "max-depth-reached"' 
+            class="stack-empty"
+        >
+            Max history depth is reached. 
+            Buy premium acc to avoid this limitation.
+        </div>
+
+        <ng-container
+            *ngIf='!topmost && state.stackProducedType._tag === "pop"'
+        >
+
+            <div class='task moved pop top' 
+            >
+    
+                <div class="header">
+                    <div class="name">
+                        {{state.stackProducedType.popped.name}}
+                    </div>
+                </div>
+    
+                <div class="body">
+                    <div class="small-label">
+                        Description:
+                    </div>
+                    <div class="desc">
+                        {{state.stackProducedType.popped.desc}}
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div 
+                class="task-moved-art pop"
+            >
+                <div class="content">
+                    <i class="ico fas fa-sign-out-alt"></i>
+                    <span class="t">
+                        Task is popped
+                    </span>
+                    <i class="ico fas fa-sign-out-alt"></i>
+                </div>
+
+            </div>
+
+
+        </ng-container>
+
+        <ng-container *ngFor='let task of state.tasks; let i = index; trackBy: trackByIndex'
+        >
+    
+            <div 
+                class='task' *ngIf='topmost'
+                [ngClass]='{ "top free-height": i === 0 }'
+            >
+    
+                <div class="header">
+                    <!-- <input
+                        placeholder="Task Name"
+                        class="name-input"
+                        [ngModel]='task.name'
+                        (ngModelChange)='setTaskName(i, $event)'
+                    />     -->
+                    <div class="name">
+                        {{task.name}}
+                    </div>
+                </div>
+    
+            
+                <div class="body">
+                    <div class="small-label">
+                        Description:
+                    </div>
+                    <div class="desc">
+                        {{task.desc}}
+                    </div>
+                    <!-- <textarea
+                        class="desc-input"
+                        placeholder="Task Description"
+                        [ngModel]='task.desc'
+                        (ngModelChange)='setTaskDesc(i, $event)'
+                    ></textarea> -->
+                    <button class="bot-btn" *ngIf='i === 0'
+                        (click)='popTask()'
+                    >
+                        <p>
+                            <span class="bg"></span>
+                            <span class="base"></span>
+                            <span class="text">
+                                Finish task
+                            </span>
+                        </p>
+                    </button>
+                </div>
+                
+            </div>
+    
+            <div class='task' 
+                *ngIf='!topmost'
+                [ngClass]='{ "moved push top": i === 0 && state.stackProducedType._tag === "push" }'
+            >
+    
+                <div class="header">
+                    <div class="name">
+                        {{task.name}}
+                    </div>
+                </div>
+    
+                <div class="body">
+                    <div class="small-label">
+                        Description:
+                    </div>
+                    <div class="desc">
+                        {{task.desc}}
+                    </div>
+                </div>
+            </div>
+
+
+            <div 
+                *ngIf='!topmost && i === 0 && state.stackProducedType._tag === "push"'
+                class="task-moved-art push"
+            >
+                <div class="content">
+                    <i class="ico fas fa-sign-in-alt"></i>
+                    <span class="t">
+                        Task is pushed
+                    </span>
+                    <i class="ico fas fa-sign-in-alt"></i>
+                </div>
+            </div>
+
+    
+        </ng-container>
+
+    </div>
+
+
+</div>
+
+<!-- On topmost level the same stack is shown in history to avoid confusion in history perception -->
+<ng-container *ngIf='topmost'>
+
+    <div class="stack-equals-arrow">
+        <i class="fas fa-pause-circle"></i>
+    </div>
+
+    <div
+        class="prev-stack first"
+    >
+        <task-stack-view 
+            [topmost]="false"
+            [maxDepth]='maxDepth'
+            [state]='state'
+        >
+        </task-stack-view>
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf='!topmost && state.prev.hasVal'>
+
+    <div class="stack-morph-arrow">
+        <i class="fas fa-arrow-alt-circle-left"></i>
+    </div>
+
+
+    <div *ngIf='maxDepth > 0'
+        class="prev-stack"
+    >
+        <task-stack-view 
+            [topmost]="false"
+            [maxDepth]='maxDepth - 1'
+            [state]='state.prev.val'
+        >
+        </task-stack-view>
+    </div>
+
+    <!-- maxDepth (view limitation) reached but there is still prev stack. let's render maxDepthReachedStack 
+        (it doensn't have predecessor, so recursion will stop on it) 
+    -->
+    <div *ngIf='maxDepth === 0'
+        class="prev-stack"
+        >
+            <task-stack-view 
+                [topmost]="false"
+                [maxDepth]='0'
+                [state]='maxDepthReachedStack'
+            >
+            </task-stack-view>
+    </div>
+
+</ng-container>
+
+

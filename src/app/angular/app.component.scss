@@ -1,0 +1,84 @@
+@import '../scss/task.scss';
+
+:host {
+    display: block;
+}
+
+.main-container {
+    
+    transition: filter 300ms ease;
+    -webkit-transition : -webkit-filter 300ms ease;
+    &.blur {
+        filter: grayscale(0.7);
+        -webkit-filter: grayscale(0.7);
+    }
+
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    .top-container {
+        padding-top: 20px;
+        background: linear-gradient(90deg, #293440, #35404c);
+        display: grid;
+        grid-template-rows: repeat(3, max-content)
+    }
+    .mid-container {
+        padding: 20px;
+        overflow: scroll;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+}
+
+.new-task {
+    @include task-block;
+    background-color: rgb(90, 52, 59);
+    width: 330px;
+}
+
+.heading-container {
+    display: grid;
+    grid-template-columns: 408px 1fr;
+    gap: 2px;
+
+    .heading {
+        font-size: 20px;
+        font-weight: 600;
+        color: #857c6c;
+
+
+        &.bright {
+            color: #d5d5d5;
+        }
+        
+        &.p {
+            padding: 0 20px
+        }
+        &.s {
+            border-bottom: 1px solid;
+        }
+        &.d {
+            border-bottom: 1px dashed;
+        }
+    }
+}
+
+.second-row {
+    display: grid;
+    grid-template-columns: 408px 1fr;
+    padding: 20px;
+    .disclaimer {
+        font-size: 15px;
+        text-align: right;
+        max-width: 700px;
+        justify-self: end;
+        display: grid;
+        gap: 10px;
+        .t {
+            .h {
+                color: gray
+            }
+        }
+    }
+}

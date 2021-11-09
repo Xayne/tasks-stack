@@ -1,0 +1,105 @@
+<full-screen-loader [state]='state.uiBlockCount !== 0'>
+</full-screen-loader>
+
+<div *ngIf='state.signedInAs.hasVal' 
+    class="main-container"
+    [ngClass]='{"blur": state.uiBlockCount !== 0}'
+>
+
+    <div class="top-container">
+
+        <div class="heading-container">
+            <div class="heading p bright">
+                Create new task:
+            </div>
+        </div>
+    
+        <div class="second-row">
+    
+            <div class="new-task free-height">
+        
+                <div class="header">
+                    <input
+                        placeholder="Task Name"
+                        class="name-input"
+                        [ngModel]='state.stacks.newTask.name'
+                        (ngModelChange)='setNewTaskName($event)'
+                    />    
+                </div>
+        
+            
+                <div class="body">
+                    <div class="small-label">
+                        Description:
+                    </div>
+                    <textarea
+                        class="desc-input"
+                        placeholder="Task Description"
+                        [ngModel]='state.stacks.newTask.desc'
+                        (ngModelChange)='setNewTaskDesc($event)'
+                    ></textarea>
+                    <button
+                        class="bot-btn"
+                        (click)='pushNewTask()'
+                    >
+                    <p>
+                        <span class="bg"></span>
+                        <span class="base"></span>
+                        <span class="text">
+                            Push new task
+                        </span>
+                    </p>
+                    </button>
+                </div>
+            </div>
+    
+            <div class="disclaimer">
+                <div class="t">
+                    The software is provided "as is", without warranty of any kind, express or
+                    implied, including but not limited to the warranties of merchantability,
+                    fitness for a particular purpose and noninfringement. In no event shall the
+                    authors or copyright holders be liable for any claim, damages or other
+                    liability, whether in an action of contract, tort or otherwise, arising from,
+                    out of or in connection with the software or the use or other dealings in the
+                    software.
+                </div>
+                <div class="t">
+                    And yep, <span class="h">the site uses cookies.</span>
+                    By continue using the site you allow the site to use cookies. 
+                </div>
+                <div>
+                    Red Panda Coalesence 2021-present.
+                </div>
+            </div>
+        </div>
+    
+    
+    
+        <div class="heading-container">
+            <div class="heading s p">
+                Current state:
+            </div>
+            <div class="heading d">
+                History:
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="mid-container">
+        <task-stack-view 
+            root
+            [topmost]="true"
+            [maxDepth]='state.stacks.showMaxDepth'
+            [state]='state.stacks.stack'
+        >
+        </task-stack-view>
+    </div>
+
+</div>
+
+<div *ngIf='!state.signedInAs.hasVal'>
+    <button (click)='signInWithGoogleClick()'>Sign In With Google</button>
+</div>
+
